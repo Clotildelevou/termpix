@@ -8,9 +8,8 @@ extern crate termpix;
 use std::io::Write;
 
 use docopt::Docopt;
-use image::GenericImage;
 use terminal_size::{Width, Height, terminal_size};
-
+use image::GenericImageView;
 use std::path::Path;
 use std::cmp::min;
 

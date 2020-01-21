@@ -1,11 +1,11 @@
 [package]
 name = "termpix"
-version = "0.1.0"
+version = "0.2.0"
 
 [dependencies]
-ansi_term = "0.7"
+ansi_term = "0.12.1"
 docopt = "1.0"
-image = "*"
+image = "0.22.4"
 serde = "1.0"
 serde_derive = "1.0"
-terminal_size = "*"
+terminal_size = "0.1.10"
