@@ -20,11 +20,16 @@ pub fn print_image(img: image::DynamicImage, true_colour: bool, width: u32, heig
             let row: Vec<_> = (0..width).map(|x| {
                 let mut top = img[(x,y)];
                 let mut bottom = img[(x,y+1)];
-                blend_alpha(&mut top);
-                blend_alpha(&mut bottom);
-                let top_colour = find_colour_index(top.to_rgb().channels());
-                let bottom_colour = find_colour_index(bottom.to_rgb().channels());
-                Fixed(bottom_colour).on(Fixed(top_colour)).paint("▄")
+                if bottom[3] == 0 || top[3] == 0 {
+                    Fixed(0).paint(" ")
+                }
+                else {
+                    blend_alpha(&mut top);
+                    blend_alpha(&mut bottom);
+                    let top_colour = find_colour_index(top.to_rgb().channels());
+                    let bottom_colour = find_colour_index(bottom.to_rgb().channels());
+                    Fixed(bottom_colour).on(Fixed(top_colour)).paint("▄")
+                }
             }).collect();
 
             print!("{}\n", ANSIStrings(&row));
@@ -49,7 +54,6 @@ pub fn print_image(img: image::DynamicImage, true_colour: bool, width: u32, heig
                     write!(row, "\x1b[48;2;{};{};{}m\x1b[38;2;{};{};{}m▄",
                            top[0], top[1], top[2],
                            bottom[0], bottom[1], bottom[2]).unwrap();
-                    //write!(row, "\x1b[49m\x1b[49m▄").unwrap();
                 }
             }
 
